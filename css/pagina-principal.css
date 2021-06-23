@@ -1,0 +1,86 @@
+body {
+  background-color: #f3f3f3;
+}
+
+h1, h3 {
+  text-align: center;
+}
+
+
+.container {
+  padding: 5rem 0;
+}
+
+body footer {
+  position: absolute;
+  bottom: 0;
+  width: 95%;
+
+  display: flex;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+.box-content {
+  border: 2px dashed #A80025;
+  padding: 1rem;
+  background-color: #d8d8d8;
+}
+
+.box-content form button {
+  background-color: #FBF37C;
+  border-radius: 0.3rem;
+  padding: .4rem;
+  border: none;
+  cursor: pointer;
+}
+
+.btn {
+  display: grid;
+}
+
+.btn a button {
+  padding: .5rem;
+  border: none;
+  border-radius: .3rem;
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  margin: .2rem 0;
+}
+
+#produtos {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#clientes {
+  background-color: #ffffff;
+  color: #3a3a3a;
+}
+
+#produtos:hover {
+  background-color: #4e4e4e;
+}
+
+#clientes:hover {
+  background-color: rgb(247, 247, 247);
+}
+
+@media screen and (min-width: 887px) {
+  .container {
+    padding: 5rem 22%;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+    padding: 0 3rem;
+  }
+
+  .btn a:nth-child(2) {
+    margin-left: 1.6rem;
+  }
+}
