@@ -1,20 +1,17 @@
 <!-- chama o programa que faz o CRUD -->
-<?php include('crud.php'); ?>
-
+<?php include('crud_ven.php'); ?>
 <?php
     # Recupera o registro para a ediçao
     if (isset($_GET['edit'])) {
-        $id = $_GET['edit'];
+        $codven = $_GET['edit'];
         $update = true;
-        $record = mysqli_query($db, "SELECT * FROM produtos WHERE id=$id");
+        $record = mysqli_query($db, "SELECT * FROM vendas WHERE codven=$codven");
         #teste o retorno do select e cria o vetor com os registros trazidos
-        # if (count($record) == 1) {
         if ($record) {
             $n = mysqli_fetch_array($record);
-            $nome = $n['nome'];
-            $descricao = $n['descricao'];
-            $qtdEstoque = $n['qtdEstoque'];
-            $precoUnit = $n['precoUnitario'];
+            $idcli = $n['idcli'];
+            $idprod = $n['idprod'];
+            $qtdItens = $n['qtdVen'];
         }
     }
 
@@ -29,7 +26,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Produtos</title>
+    <title>Vendas</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -60,59 +57,51 @@
     <!-- ------------------------------------------------- -->
 
     <!-- recupera os registros do banco de dados e exibe na página -->
-    <?php $results = mysqli_query($db, "SELECT * FROM produtos"); ?>
+    <?php $results = mysqli_query($db, "SELECT codven, qtdVen, nomecli, p.nome, (qtdVen * precoUnitario) as valorTotal FROM vendas v INNER JOIN produtos p ON v.idprod=p.id INNER JOIN clientes c ON v.idcli=c.idcli"); ?>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Estoque</th>
-                <th>Preço</th>
+                <th>Cod. Venda</th>
+                <th>Nome Cliente</th>
+                <th>Nome Produto</th>
+                <th>Quantidade Vendida</th>
+                <th>Valor Total</th>
                 <th colspan="2">Ação</th>
             </tr>
         </thead>
         <!-- cria o vetor com os registros trazidos do select -->
         <!-- Início while -->
-        <?php while ($rs = mysqli_fetch_array($results)) { ?> <!-- Fica no loop enquanto houver registro no array -->
+        <?php while ($rs = mysqli_fetch_array($results)) { ?>
             <tr>
-                <th><?php echo $rs['id']; ?></th>
+                <th><?php echo $rs['codven']; ?></th>
+                <td><?php echo $rs['nomecli']; ?></td>
                 <td><?php echo $rs['nome']; ?></td>
-                <td><?php echo $rs['descricao']; ?></td>
-                <td><?php echo $rs['qtdEstoque']; ?></td>
-                <td><?php echo $rs['precoUnitario']; ?></td>
+                <td><?php echo $rs['qtdVen']; ?></td>
+                <td><?php echo $rs['valorTotal']; ?></td>
                 <td>
-                    <a href="produtos.php?edit=<?php echo $rs['id']; ?>" class="edit_btn">Alterar</a>
+                    <a href="vendas.php?edit=<?php echo $rs['codven']; ?>" class="edit_btn">Alterar</a>
                 </td>
                 <td>
-                    <a href="crud.php?del=<?php echo $rs['id']; ?>" class="del_btn">Remover</a>
-                </td>         
+                    <a href="crud_ven.php?del=<?php echo $rs['codven']; ?>" class="del_btn">Remover</a>
+                </td>             
             </tr>
         <?php } ?>
         <!-- Fim while -->
     </table>
     <!-- ------------------------------------------------------------ -->
-
-    <form method="post" action="crud.php">
-        <!-- campo oculto - contem o id do registo que vai ser atualizado -->
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <form method="post" action="crud_ven.php">
+        <input type="hidden" name="codven" value="<?php echo $codven; ?>">
         <div class="input-group">
-            <label>Produto</label>
-            <!-- <input type="text" name="nome" value=""> -->
-            <input type="text" name="nome" value="<?php echo $nome; ?>">
+            <label>Quantidade de itens</label>
+            <input type="text" name="qtdItens" value="<?php echo $qtdItens; ?>">
         </div>
         <div class="input-group">
-            <label>Descrição</label>
-            <!-- <input type="text" name="descricao" value=""> -->
-            <input type="text" name="descricao" value="<?php echo $descricao; ?>">
+            <label>Id do Cliente</label>
+            <input type="text" name="idcli" value="<?php echo $idcli; ?>">
         </div>
         <div class="input-group">
-            <label>Quantidade em Estoque</label>
-            <input type="text" name="qtdEstoque" value="<?php echo $qtdEstoque; ?>">
-        </div>
-        <div class="input-group">
-            <label>Preço Unitário</label>
-            <input type="text" name="precoUnit" value="<?php echo $precoUnit; ?>">
+            <label>Id do Produto</label>
+            <input type="text" name="idprod" value="<?php echo $idprod; ?>">
         </div>
         <div class="input-group">
             <?php if ($update == true) : ?>

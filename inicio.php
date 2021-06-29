@@ -27,7 +27,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tela Principal</title>
-  <link rel="stylesheet" href="css/pagina-principal.css">
+  <link rel="stylesheet" href="css/page-principal.css">
 </head>
 <body>
   <div class="container">
@@ -46,6 +46,9 @@
         </a>
         <a href="clientes.php">
           <button id="clientes">Cadastro de clientes</button>
+        </a>
+        <a href="vendas.php">
+          <button id="vendas">Cadastrar Vendas</button>
         </a>
       </div>
 

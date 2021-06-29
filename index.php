@@ -1,3 +1,18 @@
+<?php
+
+if (isset($_SESSION['loginok'])) {
+  # Inicia a sessão
+  session_start(); 
+  
+  # encerra a sessão
+  session_unset();
+
+  # destroi a sessão
+  session_destroy();
+}
+
+?>
+
 <?php include('login.php') ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
